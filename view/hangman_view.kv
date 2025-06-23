@@ -1,0 +1,38 @@
+##:import Label kivy.uix.label.Label
+#HangmanLayout:
+#:import StartScreen view.start_screen
+#:import GameScreen view.game_screen
+
+
+#fonts setup
+<Button, Label>:
+    font_name: "fonts/ComicNeue/ComicNeue-Regular.ttf"
+
+#Define a bold label type
+<BoldLabel@Label, QuitButton, StartButton>:
+    font_name: "fonts/ComicNeue/ComicNeue-Bold.ttf"
+
+
+
+
+#Main Layout
+<HangmanLayout>:
+    orientation: 'vertical'
+    
+    canvas.before:
+        Rectangle:
+            source: "images/background.png"
+            pos: self.pos
+            size: self.size
+
+    ScreenManager:
+        id: screen_manager
+
+        StartScreen:
+        GameScreen:
+            id: game_screen
+            score: str(root.score)
+            attempts_left: root.attempts_left
+            word_state: root.word_state
+
+        

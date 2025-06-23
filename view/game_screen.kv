@@ -1,0 +1,161 @@
+#:import PopupWidget view.popup_widget
+<BoldLabel@Label>:
+    font_name: "fonts/ComicNeue/ComicNeue-Bold.ttf"
+
+#widget background
+<RoundedBackgroundBox@BoxLayout>:
+    orientation: "vertical"
+    bg_color: 0.996, 0.49, 0.455, 1
+    padding: "20dp"
+
+    canvas.before:
+        Color:
+            rgba: root.bg_color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20]
+
+
+<GameScreen>:
+    name: "hangman"
+
+    score: "0"
+    attempts_left: 6
+    word_state: ""
+
+    letters: alphakeys.letters
+
+    BoxLayout:
+        orientation: "vertical"
+
+        padding: "10dp"
+        
+        #content
+        TopWidgets:
+            ScoreWidget:
+                score: root.score
+                size_hint: .25, 1
+            AttemptsWidget:
+                attempts_left: root.attempts_left
+                size_hint: .50, 1
+            QuitButton:
+                text: "Quit"
+                font_size: "25sp"
+                size_hint: 0.25, 1
+                on_press: app.root.quit_confirm()
+        
+        BoldLabel:
+            id: word_label
+            text: root.word_state
+            font_size: "35sp"
+            size_hint: 1, 1
+
+        #Button:
+            #text: "2"
+            #on_press: root.parent.parent.view_model.start()
+        
+        AlphakeyWidget:
+            id: alphakeys
+
+        #PopupWidget:
+            #heading: "pop-up"
+            #first_label: root.score
+            #second_label: ""
+            #first_btn_text: "PLAY AGAIN"
+            #second_btn_text: "QUIT"
+
+<TopWidgets@BoxLayout>:
+    orientation: "horizontal"
+    
+    spacing: "10dp"
+    padding: ["5dp","0dp", "5dp", "0dp"]
+    size_hint: 1, None
+    height: "60dp"
+    
+
+<ScoreWidget@Widget>:
+    score: "0"
+    RoundedBackgroundBox:
+        size: root.size
+        pos: root.pos
+        
+        #padding: "20dp"
+        spacing: "20dp"
+        
+        Label:
+            text: "Score"
+            font_size: "14sp"
+
+        BoldLabel:
+            text: root.score
+            font_size: "25sp"
+
+<AttemptsWidget@Widget>:
+    attempts_left: 6
+    
+    RoundedBackgroundBox:
+        orientation: "horizontal"
+        
+        bg_color: 0.447, 0.522, 0.894, 1
+        
+        size: root.size
+        pos: root.pos
+
+        spacing: "20dp"
+        
+        BoldLabel:
+            text: str(root.attempts_left)
+            font_size: "50sp"
+            size_hint: 0.3, 1
+        
+        BoxLayout:
+            orientation: "vertical"
+            spacing: "20dp"
+
+            Label:
+                text: "Attempts Left"
+                font_size: "14sp"
+                
+            
+            ProgressBar:
+                max: 6
+                value: root.attempts_left
+                size_hint: 0.9, 1
+
+<AlphakeyWidget>:
+    cols: 8
+    spacing: 5
+
+
+
+#custom buttons
+<QuitButton@Button>:
+    background_normal: ''   # Removes the default background image
+    background_down: ''
+    background_color: 0, 0, 0, 0  # Make default bg transparent
+    font_name: "fonts/ComicNeue/ComicNeue-Bold.ttf"
+    canvas.before:
+        Color:
+            rgba: (0.11, 0.757, 0.878, 1) if self.state == "normal" else (0.08, 0.6, 0.7, 1) # Green background
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20]  # Adjust radius for roundness
+
+<AlphakeyButton>:
+    custom_color: (0.482, 0.627, 0.902, 1)
+    background_normal: ''   # Removes the default background image
+    background_down: ''
+    background_color: 0, 0, 0, 0  # Make default bg transparent
+    #font_name: "fonts/ComicNeue/ComicNeue-Bold.ttf"
+    canvas.before:
+        Color:
+            rgba: 
+                self.custom_color if self.state == "normal" and not self.disabled else \
+                (0.08, 0.6, 0.7, 1) if self.state == "down" and not self.disabled else \
+                (0.5, 0.5, 0.5, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10]  # Adjust radius for roundness
