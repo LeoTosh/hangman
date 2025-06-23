@@ -1,0 +1,97 @@
+
+<PopupWidget@Widget>:
+    heading: "pop-up"
+    first_label: ""
+    second_label: ""
+    first_btn_text: "PLAY AGAIN"
+    when_press_first: None
+    second_btn_text: "QUIT"
+    when_press_second: None
+    
+    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+    size_hint: (0.85, 0.35)
+
+    canvas.before:
+        Color:
+            rgba: (0.482, 0.627, 0.902, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20]
+        
+        Color:
+            rgba: (0.45, 0.52, 0.89, 1)
+        RoundedRectangle:
+            pos: self.x + 5, self.y + 5
+            size: self.width - 10, self.height - 10
+            radius: [18]
+    
+    BoxLayout:
+        id: outer_layout
+        orientation: "vertical"
+
+        size: root.size
+        pos: root.pos
+
+        padding: "15dp"
+        spacing: "10dp"
+
+        Label:
+            text: root.heading
+            font_size: "40sp"
+            color: (0.992, 0.549, 0.4, 1)
+        Label:
+            id: first_label
+            text: root.first_label
+            font_size: "24sp"
+        Label:
+            id: second_label
+            text: root.second_label
+            font_size: "24sp"
+
+        BoxLayout:
+            
+            orientation: "horizontal"
+
+            spacing: "5dp"
+            
+            PopupButton:
+                btn_color: (0.447, 0.78, 0.557, 1)
+                text: root.first_btn_text
+                font_size: "18sp"
+                on_press: root.when_press_first()
+
+            PopupButton:
+                btn_color: (0.996, 0.682, 0.333, 1)
+                text: root.second_btn_text
+                font_size: "18sp"
+                on_press: root.when_press_second()
+        
+<PopupButton@Button>:
+    background_normal: ''   # Removes the default background image
+    background_down: ''
+    background_color: 0, 0, 0, 0  # Make default bg transparent
+    font_name: "fonts/ComicNeue/ComicNeue-Bold.ttf"
+    
+    btn_color: (0.11, 0.757, 0.878, 1)
+
+    canvas.before:
+        Color:
+            rgba: self.btn_color if self.state == "normal" else (0.08, 0.6, 0.7, 1) # Green background
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20]  # Adjust radius for roundness
+
+
+<PopupModalView@ModalView>:
+    
+    background_color: (0, 0, 0, 0)
+    auto_dismiss: False
+
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 0.3  # semi-transparent black
+        Rectangle:
+            size: self.size
+            pos: self.pos

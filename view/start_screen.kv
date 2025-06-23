@@ -1,0 +1,25 @@
+
+<StartScreen@Screen>:
+    name: "start"
+    
+    FloatLayout:
+        StartButton:
+            text: "Start"
+            font_size: "30sp"
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            size_hint: None, None
+            size: "150dp", "50dp"
+            on_press: root.parent.parent.start_hangman()
+
+<StartButton@Button>:
+    background_normal: ''   # Removes the default background image
+    background_down: ''
+    background_color: 0, 0, 0, 0  # Make default bg transparent
+    font_name: "fonts/ComicNeue/ComicNeue-Bold.ttf"
+    canvas.before:
+        Color:
+            rgba: (0.996, 0.682, 0.333, 1) if self.state == 'normal' else (0.08, 0.6, 0.7, 1) # Green background
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20]  # Adjust radius for roundness
