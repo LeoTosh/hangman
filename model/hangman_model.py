@@ -1,6 +1,4 @@
 import random
-import string
-from typing import LiteralString
 
 
 class HangmanModel:
@@ -10,7 +8,7 @@ class HangmanModel:
         self.score: int = 0
 
         self.secret_word: str = ""
-        self.letters_guessed: list[str | None] = []
+        self.letters_guessed: list[str] = []
         self.word_state: str = ""
 
     def load_words(self) -> list[str]:
@@ -63,15 +61,6 @@ class HangmanModel:
 
         return "".join(letter if letter in self.letters_guessed else "_ " for letter in self.secret_word)
 
-    def get_available_letters(self) -> str:
-        '''
-        letters_guessed: list (of letters), which letters have been guessed so far
-        returns: string (of letters), comprised of letters that represents which letters have not
-        yet been guessed.
-        '''
-        alphabets: LiteralString = string.ascii_lowercase
-        return "".join(alphabet for alphabet in alphabets if alphabet not in self.letters_guessed)
-
     def is_letter_in_secret_word(self, letter: str) -> bool:
         return True if letter in self.secret_word else False
     
@@ -85,7 +74,7 @@ class HangmanModel:
 
         return self.score
     
-    def reset(self):
+    def reset(self) -> None:
         self.score = 0
         self.guesses: int = 6
         self.secret_word: str = ""

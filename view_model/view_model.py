@@ -1,12 +1,16 @@
+from typing import Any
+
+
 from kivy.properties import BooleanProperty, ListProperty, NumericProperty, StringProperty
 from kivy.event import EventDispatcher
 
+
 class HangmanViewModel(EventDispatcher):
-    guesses = NumericProperty(6)
-    secret_word = StringProperty()
-    letters_guessed = ListProperty()
-    word_state = StringProperty()
-    score = NumericProperty(0)
+    guesses: int = NumericProperty(6)
+    secret_word: str = StringProperty()
+    letters_guessed: list[str] = ListProperty()
+    word_state: str = StringProperty()
+    score: int = NumericProperty(0)
 
     game_over = BooleanProperty(False)
     word_guessed= BooleanProperty(False)
@@ -21,12 +25,12 @@ class HangmanViewModel(EventDispatcher):
     def start(self) -> None:
         self.model.start()
         
-        self.guesses = self.model.guesses
-        self.secret_word = self.model.secret_word
+        self.guesses: int = self.model.guesses
+        self.secret_word: str = self.model.secret_word
         print(self.secret_word)
-        self.word_state = self.model.word_state
-        self.letters_guessed = self.model.letters_guessed
-        self.score = self.model.score
+        self.word_state: str = self.model.word_state
+        self.letters_guessed: list[str] = self.model.letters_guessed
+        self.score: int = self.model.score
     
     def guess_letter(self, letter: str) -> None:
         
