@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *.so
+bin/
 
 # Virtual environment
 .venv/
@@ -25,3 +26,4 @@ Thumbs.db
 .buildozer/
 buildozer.spec
 *.spec
+*.apk

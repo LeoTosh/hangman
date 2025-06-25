@@ -27,7 +27,7 @@ class AlphakeyButton(Button):
 class AlphakeyWidget(GridLayout):
     letters = ListProperty()
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
         self.size_hint_y = None
@@ -46,7 +46,7 @@ class AlphakeyWidget(GridLayout):
 
             btn: AlphakeyButton = AlphakeyButton(text=letter, 
                 size_hint_y=None, 
-                height="50dp",
+                height="45dp",
                 font_size="20sp",
                 custom_color=button_color)
             
