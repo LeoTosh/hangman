@@ -1,19 +1,39 @@
-from kivy.properties import BooleanProperty, ListProperty, NumericProperty, StringProperty
+from typing import Protocol
+
 from kivy.event import EventDispatcher
+from kivy.properties import BooleanProperty, ListProperty, NumericProperty, StringProperty
+
+
+class HangmanModel(Protocol):
+    guesses: int
+    score: int
+    secret_word: str
+    letters_guessed: list[str]
+    word_state: str
+
+    def load_words(self) -> list[str]: ...
+    def choose_word(self) -> str: ...
+    def start(self) -> None: ...
+    def is_word_guessed(self) -> bool: ...
+    def get_guessed_word(self) -> str: ...
+    def is_letter_in_secret_word(self, letter: str) -> bool: ...
+    def game_over(self) -> bool: ...
+    def cal_score(self) -> None: ...
+    def reset(self) -> None: ...
 
 class HangmanViewModel(EventDispatcher):
     guesses = NumericProperty(6)
     secret_word = StringProperty()
-    letters_guessed = ListProperty()
-    word_state = StringProperty()
-    score = NumericProperty(0)
+    letters_guessed = ListProperty() 
+    word_state= StringProperty()
+    score= NumericProperty(0)
 
     game_over = BooleanProperty(False)
     word_guessed= BooleanProperty(False)
 
-    def __init__(self, model, **kwargs) -> None:
+    def __init__(self, model: HangmanModel, **kwargs) -> None:
         super().__init__(**kwargs)
-        self.model = model
+        self.model: HangmanModel = model
 
         self.bind(guesses=self._check_game_over)
         self.bind(word_state=self._is_word_guessed)
@@ -23,7 +43,7 @@ class HangmanViewModel(EventDispatcher):
         
         self.guesses = self.model.guesses
         self.secret_word = self.model.secret_word
-        print(self.secret_word)
+        #print(self.secret_word)
         self.word_state = self.model.word_state
         self.letters_guessed = self.model.letters_guessed
         self.score = self.model.score
@@ -67,4 +87,8 @@ class HangmanViewModel(EventDispatcher):
         
 
 if __name__ == "__main__":
-    HangmanViewModel(HangmanModel())
+    from model.hangman_model import HangmanModel
+    
+    model = HangmanModel()
+    vm = HangmanViewModel(model)
+    vm.start()

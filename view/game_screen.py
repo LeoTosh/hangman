@@ -5,7 +5,6 @@ from kivy.properties import NumericProperty, ObjectProperty, StringProperty, Lis
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import Screen
-from kivy.uix.widget import Widget
 from pathlib import Path
 from kivy.app import App
 
@@ -28,7 +27,7 @@ class AlphakeyButton(Button):
 class AlphakeyWidget(GridLayout):
     letters = ListProperty()
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
         self.size_hint_y = None
@@ -45,9 +44,9 @@ class AlphakeyWidget(GridLayout):
             else:
                 button_color = (0.992, 0.549, 0.4, 1)
 
-            btn = AlphakeyButton(text=letter, 
+            btn: AlphakeyButton = AlphakeyButton(text=letter, 
                 size_hint_y=None, 
-                height=40,
+                height="45dp",
                 font_size="20sp",
                 custom_color=button_color)
             

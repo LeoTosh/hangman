@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *.so
+bin/
 
 # Virtual environment
 .venv/
@@ -20,3 +21,9 @@ env
 # OS files
 .DS_Store
 Thumbs.db
+
+#other folders
+.buildozer/
+buildozer.spec
+*.spec
+*.apk

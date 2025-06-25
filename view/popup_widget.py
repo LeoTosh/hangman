@@ -1,5 +1,5 @@
 from kivy.lang import Builder
-from kivy.properties import NumericProperty, ObjectProperty, StringProperty
+from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.modalview import ModalView
 from kivy.uix.widget import Widget
 from pathlib import Path
