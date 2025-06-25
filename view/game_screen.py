@@ -44,9 +44,9 @@ class AlphakeyWidget(GridLayout):
             else:
                 button_color = (0.992, 0.549, 0.4, 1)
 
-            btn = AlphakeyButton(text=letter, 
+            btn: AlphakeyButton = AlphakeyButton(text=letter, 
                 size_hint_y=None, 
-                height=50,
+                height="50dp",
                 font_size="20sp",
                 custom_color=button_color)
             
