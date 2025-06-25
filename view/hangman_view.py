@@ -1,20 +1,25 @@
+from typing import Protocol
+
 from kivy.lang import Builder
+from kivy.properties import NumericProperty, ObjectProperty, StringProperty
 from kivy.uix.boxlayout import BoxLayout
 from pathlib import Path
-from kivy.properties import NumericProperty, ObjectProperty, StringProperty
-from kivy.uix.button import Button
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.label import Label
-from kivy.uix.screenmanager import Screen
-from kivy.uix.widget import Widget
-from kivy.graphics import Color, Rectangle
-
 
 from view.popup_widget import PopupWidget, PopupModalView
 
+class HangmanViewModel(Protocol):
+    guesses: int
+    secret_word: str
+    letters_guessed: list[str]
+    word_state: str
+    score: int
 
+    game_over: bool
+    word_guessed: bool
 
+    def start(self) -> None: ...
+    def guess_letter(self, letter: str) -> None: ...
+    def reset_game(self) -> None: ...
 
 
 class HangmanLayout(BoxLayout):
@@ -24,7 +29,7 @@ class HangmanLayout(BoxLayout):
     secret_word = StringProperty()
     score = NumericProperty(0)
 
-    def __init__(self, view_model, **kwargs) -> None:
+    def __init__(self, view_model: HangmanViewModel, **kwargs) -> None:
         super().__init__(**kwargs)
         self.view_model = view_model
         
@@ -43,16 +48,16 @@ class HangmanLayout(BoxLayout):
         self.view_model.bind(game_over=self.on_game_over)
         self.view_model.bind(word_guessed=self.on_word_guessed)
     
-    def start_hangman(self):
+    def start_hangman(self) -> None:
         self.view_model.start()
         self.ids.screen_manager.current = "hangman"
 
-    def on_game_over(self, instance, value):
+    def on_game_over(self, instance, value) -> None:
         if value:
             #scrn = self.ids.game_screen
             #layout= FloatLayout()
-            overlay = PopupModalView(size=self.size, auto_dismiss=False)
-            popup = PopupWidget(
+            overlay: PopupModalView = PopupModalView(size=self.size, auto_dismiss=False)
+            popup: PopupWidget = PopupWidget(
                 heading="Game Over",
                 first_label=f"Score: {self.score}",
                 second_label=str(self.secret_word).upper(),
@@ -65,11 +70,11 @@ class HangmanLayout(BoxLayout):
             overlay.add_widget(popup)
             overlay.open()
     
-    def on_word_guessed(self, instance, value):
+    def on_word_guessed(self, instance, value) -> None:
         if value:
             #scrn = self.ids.game_screen
-            overlay = PopupModalView(size=self.size, auto_dismiss=False)
-            popup = PopupWidget(
+            overlay: PopupModalView = PopupModalView(size=self.size, auto_dismiss=False)
+            popup: PopupWidget = PopupWidget(
                 heading="Word Guessed",
                 first_label=f"Score: {self.view_model.score}",
                 second_label=str(self.secret_word).upper(),
@@ -82,10 +87,10 @@ class HangmanLayout(BoxLayout):
             overlay.add_widget(popup)
             overlay.open()
 
-    def quit_confirm(self):
+    def quit_confirm(self) -> None:
 
-        overlay = PopupModalView(size=self.size, auto_dismiss=True)
-        popup = PopupWidget(
+        overlay: PopupModalView = PopupModalView(size=self.size, auto_dismiss=True)
+        popup: PopupWidget = PopupWidget(
             heading="Quit Game",
             first_label="Are sure you want to QUIT?",
             first_btn_text="RETURN",
@@ -97,7 +102,7 @@ class HangmanLayout(BoxLayout):
         
         overlay.open()
 
-    def play_again(self, overlay) -> None:
+    def play_again(self, overlay: PopupModalView) -> None:
         self.view_model.reset_game()
         
         #for loop to reset buttons press during game

@@ -34,6 +34,10 @@ class HangmanModel:
         return random.choice(self.load_words())
 
     def start(self) -> None:
+        """
+        Returns None
+        Start game by initialising secret word and word state.
+        """
         if not self.secret_word:
             self.secret_word = self.choose_word()
             self.word_state = self.get_guessed_word()
@@ -65,21 +69,31 @@ class HangmanModel:
         return True if letter in self.secret_word else False
     
     def game_over(self) -> bool:
+        """
+        Returns None
+        Logic to check if game is over.
+        """
         return True if self.guesses <= 0 else False
 
-    def cal_score(self) -> int:
+    def cal_score(self) -> None:
+        """
+        Returns None
+        Logic to calculate score.
+        """
         unique_correct: int = len(set(self.letters_guessed))
         #total_unique: int = len(set(self.secret_word))
-        self.score: int = round((unique_correct * 10) * (self.guesses * 2))
-
-        return self.score
+        self.score = round((unique_correct * 10) * (self.guesses * 2))
     
     def reset(self) -> None:
+        """
+        Returns None
+        reset every key value to defult before game start.
+        """
         self.score = 0
-        self.guesses: int = 6
-        self.secret_word: str = ""
-        self.letters_guessed: list[None] = []
-        self.word_state: str = ""
+        self.guesses = 6
+        self.secret_word = ""
+        self.letters_guessed = []
+        self.word_state= ""
 
     @staticmethod
     def is_vowel(letter: str) -> bool:

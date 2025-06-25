@@ -5,7 +5,6 @@ from kivy.properties import NumericProperty, ObjectProperty, StringProperty, Lis
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import Screen
-from kivy.uix.widget import Widget
 from pathlib import Path
 from kivy.app import App
 
