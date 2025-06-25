@@ -21,7 +21,7 @@ class HangmanModel:
         filename: str = "./model/words.txt"
         with open(filename) as in_file:
             wordlist: list[str] = in_file.readline().split()
-        print(len(wordlist))
+        #print(len(wordlist))
         return wordlist
 
 

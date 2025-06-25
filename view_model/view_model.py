@@ -43,7 +43,7 @@ class HangmanViewModel(EventDispatcher):
         
         self.guesses = self.model.guesses
         self.secret_word = self.model.secret_word
-        print(self.secret_word)
+        #print(self.secret_word)
         self.word_state = self.model.word_state
         self.letters_guessed = self.model.letters_guessed
         self.score = self.model.score
